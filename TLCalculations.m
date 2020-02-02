@@ -1,3 +1,8 @@
+clear all;
+close all;
+clc;
+
+%fnite_final_111center_cond.m
 %Computation for Transmission Line Geometry #3
 %By: Anthony Gasbarro
 
