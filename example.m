@@ -115,7 +115,7 @@ end
  % phi=[phi(1:mem(1,1)-1),1);knod;phi(mem(1,1):end,1)];
  % reshape the phi column matix back to geometry dimensions
 
- for r=1:max
+ for r=1:rmax
      phi_mat(r,:,die)=phi(1+ (r-1)*cmax : ((r-1)*cmax) +cmax,1);
  end
  %plot phi matrix
