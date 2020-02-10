@@ -87,7 +87,8 @@ for run = 1:2
     for i = 1:nodesTotal
 
         %create an x,y point for reference in the phi matrix
-        %y is determined as the modulus of x since, y-axis for tables are inversed from typical i,j notation
+        %y is determined as the modulus of x since, y-axis for tables 
+        %are inversed from typical i,j notation
         x = mod(i,colMax);
         y = fix(i/colMax)+1; 
 
@@ -181,7 +182,7 @@ for run = 1:2
         %   -if at interface with no edge or conductor
         else
 
-            % Determine NOT if on the conductor and compute potential
+            % Determine if NOT on the conductor and compute potential
             if(x <= xNextToConductor || x>xConductorWidth+xNextToConductor)
                 Amatrix(i,i) = -4*(Er + 1);
 
@@ -227,7 +228,7 @@ for run = 1:2
                     Bmatrix(i) = (i) - Er*bottomPotential*2;
                 end
 
-                %The next section handles cases where there is no conductor and
+                %This section handles cases where there is no conductor and
                 %no edge adjacent to the node
                 if(leftEdge == 0 && rightOfConductor == 0) 
                     Amatrix(i, i-1) = Er+1; 
