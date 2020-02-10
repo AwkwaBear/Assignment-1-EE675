@@ -36,7 +36,7 @@ clc;
 %this is a value that the distance from the center conductor is divided by
     contour = 2;
     
-%designate potential for edges
+%User can designate potential for edges
     leftPotential = 0;
     rightPotential = 0;
     topPotential = 0;
@@ -342,20 +342,21 @@ end
 Z = 1/(c*sqrt(capacitanceAir*capacitance));
 Vp = c*sqrt(capacitanceAir/capacitance);
 
+%% Generate output and Display on Figures
 
 %Display Air output on heatmap
 figure('Name','Air Run','NumberTitle','off');
 imagesc(outputMatrixAir)
 hold on
-colormap(jet)
+colormap(hot)
 colorbar
 hold off
 
-%Display Air output on heatmap
+%Display Dielectric output on heatmap
 figure('Name','Dielectric Run','NumberTitle','off');
 imagesc(outputMatrix)
 hold on
-colormap(jet)
+colormap(hot)
 colorbar
 hold off
 
