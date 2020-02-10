@@ -3,7 +3,7 @@ clear;
 clc;
 
 %user-defined variables:
-width = 3;          %width of cross section in m
+width = 7;          %width of cross section in m
 height = 2;         %height of cross section in m
 h = 0.1;            %mesh size in m
 dieheight = 1;		%bottom dielectric's height in m
