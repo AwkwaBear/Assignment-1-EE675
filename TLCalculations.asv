@@ -15,7 +15,7 @@ clc;
     widthConductor = 1.00; 
     thicknessConductor = 0; %Assume thickness to be zero
     heightDielectric = 1.00; %dielectric height per given data
-    er = 1.0;
+    er = 9.6;
 
 
 
@@ -40,8 +40,8 @@ clc;
 %% Generation of Matrices A and B %%
 
 %dimensions of points for phi matrix
-    colMax = (width/h)-1;
     rowMax = (height/h)-1; 
+    colMax = (width/h)-1;
 
 %determine 'n' for A matrix    
     nodesTotal = rowMax*colMax;
@@ -54,12 +54,24 @@ clc;
         
     %width of conductor nodes along x axis, and sections to side
         xConductorWidth = (widthConductor/h) + 1;
-        xNextToConductor = (colMax - xConductorWidth)/2;
+        xNextToConductor = (rowMax - xConductorWidth)/2;
     
 % generate 'A' Matrix with diagonal -4's, along with empty 'B' matrix
 Amatrix = eye(nodesTotal, nodesTotal)*-4;
 Bmatrix = zeros(nodesTotal, 1);
 
+% populate 1's in 'A' matrix
+for i = 1:nodesTotal
+  if (i+1 <= nodesTotal)
+      Amatrix(i+1, i) = 1;
+      Amatrix(i, i+1) = 1;
+  end
+  if (i+rowMax <= nodesTotal)
+      Amatrix(i+rowMax, i) = 1;
+      Amatrix(i, i+rowMax) = 1;
+  end
+   
+end
 
 % iterate through each row to fill in 'A' and 'B' matrices
 % 'i' is used as the iterator throughout the 'A' and 'B' matrices
@@ -68,12 +80,12 @@ for i = 1:nodesTotal
     
     %create an x,y point for reference in the phi matrix
     %y is determined as the modulus of x since, y-axis for tables are inversed from typical i,j notation
-    x = mod(i,colMax);
-    y = fix(i/colMax)+1; 
+    x = mod(i,rowMax);
+    y = fix(i/x)+1; 
    
     %account for rows that are divisible by rmax
     if(x == 0)
-        x = colMax;
+        x = rowMax;
         y = y-1;
     end
     
@@ -96,7 +108,7 @@ for i = 1:nodesTotal
     % The following computations are broken into two major sections
     % when at the dielectric interface and when not at the interface
     % Base case is when not at dielectric interface
-    if(y ~= yAboveDielectric+1)
+    if(y ~= yAboveDielectric)
         
         %Determine if at nodes above/below conductor
         %first check if x-position is within conductor bounds
@@ -135,20 +147,6 @@ for i = 1:nodesTotal
             bottomEdge=1;
             Bmatrix(i) = Bmatrix(i) - bottomPotential;
         end
-        
-        %The set the 1's if no edge or conductor nearby
-        if(leftEdge == 0)
-            Amatrix(i,i-1) = 1;
-        end
-        if(rightEdge == 0)
-            Amatrix(i,i+1) = 1;
-        end
-        if(topEdge == 0 && belowConductor == 0)
-            Amatrix(i, i-colMax) = 1;
-        end
-        if(bottomEdge == 0 && aboveConductor == 0)
-            Amatrix(i, i+colMax) = 1;
-        end
     
         
     % The 'else' case below handles second major section where 
@@ -162,8 +160,8 @@ for i = 1:nodesTotal
     else
         
         % Determine NOT if on the conductor and compute potential
-        if(x <= xNextToConductor || x>xConductorWidth+xNextToConductor)
-            Amatrix(i,i) = -4*(er + 1);
+        if((x <= xNextToConductor) || (x > (xConductorWidth + xNextToConductor)))
+            Amatrix(i,i) = (er + 1)*-4;
             
         % if ON conductor set flag and set 'A' and 'B' matrix values  
         else
@@ -225,5 +223,4 @@ for i = 1:nodesTotal
     end
 end
 
-%% Generate phi Matrix and 
-
+re
