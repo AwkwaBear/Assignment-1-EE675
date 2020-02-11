@@ -353,6 +353,11 @@ colormap(hot)
 colorbar
 hold off
 
+[a, b] = gradient(outputMatrixAir);
+figure('Name','Air Vector','NumberTitle','off');
+quiver(-a,-b)
+
+
 %Display Dielectric output on heatmap
 figure('Name','Dielectric Run','NumberTitle','off');
 imagesc(outputMatrix)
@@ -360,6 +365,10 @@ hold on
 colormap(hot)
 colorbar
 hold off
+
+[a1, b1] = gradient(outputMatrix);
+figure('Name','Dielectric Vector','NumberTitle','off');
+quiver(-a1,-b1)
 
 fprintf("*************Computation Complete*************\n")
 fprintf("Capacitance with Air = %d\n",capacitanceAir);
