@@ -17,9 +17,9 @@ clc
 % num_lines = 1;
 % val = inputdlg(prompt,dlg_title,num_lines); % assign h-value
 
-h =0.5 %str2double(val{1}); % Converting to number
-diwid =10 %str2double(val{2});
-diheight =20 %str2double(val{3});
+h = 0.5 %str2double(val{1}); % Converting to number
+diwid = 10 %str2double(val{2});
+diheight = 20 %str2double(val{3});
 dimenheight = diheight/h; % calculating number of rows for rectangle geometry
 dimenwidth = diwid/h; % calculating number of columns for rectangle geometry
 i = dimenheight-1; % calculating number of nodes
