@@ -44,7 +44,19 @@ Amatrix = -4*eye(nodes,nodes);
 for i = 1:nodesHoriz-1
     for j = 1:nodesVert
         diag1(i+(j-1)*nodesHoriz, i+(j-1)* nodesHoriz+1) = 1;
-        diag1(i+(j-1)*nodesHoriz+1, i+(j-1)*nodesHoriz) = 1;  
-        
+        diag1(i+(j-1)*nodesHoriz+1, i+(j-1)*nodesHoriz) = 1;        
     end
 end
+
+for i = 1:nodesHoriz
+    for j = 1:nodesVert-1
+        diag2(i+(j-1)*nodesHoriz, i+j*nodesHoriz) = 1;
+        diag2(i+j*nodesHoriz, i+(j-1)*nodesHoriz) = 1;
+    end
+end
+
+Amatrix = Amatrix + diag1 + diag2;
+
+[v, c] = eig(Amatrix);
+eigenValue = diag(c);
+
